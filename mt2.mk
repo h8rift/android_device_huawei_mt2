@@ -29,20 +29,20 @@ TARGET_SCREEN_WIDTH := 720
 
 # Audio
 PRODUCT_PACKAGES += \
-        audio.a2dp.default \
-        audio_policy.msm8226 \
-        audio.primary.msm8226 \
-        audio.r_submix.default \
-        audio.usb.default \
-	audiod \
-	tinymix
+    audio.a2dp.default \
+    audio.primary.msm8226 \
+    audio.r_submix.default \
+    audio.usb.default \
+    audio_policy.msm8226 \
+    audiod \
+    tinymix
 
 PRODUCT_PACKAGES += \
-        libaudio-resampler \
-	libaudioparameter \
-        libqcomvisualizer \
-        libqcompostprocbundle \
-        libqcomvoiceprocessing
+    libaudio-resampler \
+    libaudioparameter \
+    libqcompostprocbundle \
+    libqcomvisualizer \
+    libqcomvoiceprocessing
 
 # Audio configuration
 PRODUCT_COPY_FILES += \
