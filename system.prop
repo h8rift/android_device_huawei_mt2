@@ -25,8 +25,14 @@ persist.timed.enable=true
 ro.qc.sdk.audio.ssr=false
 ro.qc.sdk.audio.fluencetype=none
 
-ro.qualcomm.cabl=0
-ro.qualcomm.svi=1
+# GPS
+ro.gps.agps_provider=1
+persist.gps.qc_nlp_in_use=0
+persist.loc.nlp_name=com.qualcomm.services.location
+
+# Perf
+ro.vendor.extension_library=/system/vendor/lib/libqc-opt.so
+ro.min_freq=787000
 
 ro.nfc.port=I2C
 
