@@ -1,8 +1,5 @@
-// Overload this file in your device specific config if you need
-// to add extra camera parameters.
-// A typical file would look like this:
 /*
- * Copyright (C) 2014 The CyanogenMod Project
+ * Copyright (C) 2015 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +15,11 @@
  */
 
 #define CAMERA_PARAMETERS_EXTRA_C \
-const char CameraParameters::KEY_MULTIFOCUS_SHOT_MODE[] = "is_multifocus_mode"; \
-const char CameraParameters::SCENE_MODE_HWAUTO[] = "hwauto";
+    const char CameraParameters::KEY_MULTIFOCUS_SHOT_MODE[] = "is_multifocus_mode"; \
+    const char CameraParameters::KEY_QUCIK_SNAPSHOT_MODE[] = "fast-snapshot-mode"; \
+    const char CameraParameters::SCENE_MODE_HWAUTO[] = "hwauto"; \
 
 #define CAMERA_PARAMETERS_EXTRA_H \
     static const char KEY_MULTIFOCUS_SHOT_MODE[]; \
-    static const char SCENE_MODE_HWAUTO[];
+    static const char KEY_QUCIK_SNAPSHOT_MODE[]; \
+    static const char SCENE_MODE_HWAUTO[]; \
