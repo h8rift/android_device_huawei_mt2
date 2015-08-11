@@ -14,72 +14,91 @@
 # limitations under the License.
 #
 
-TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
-TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
-TARGET_CPU_ABI := armeabi-v7a
-TARGET_CPU_ABI2 := armeabi
-TARGET_CPU_SMP := true
+# Assert
+# Stock values:
+#   ro.product.device=hwMT2L03
+#   ro.build.product=MT2L03
+# Also:
+#   ro.build.id=HuaweiMT2L03
+TARGET_OTA_ASSERT_DEVICE := MT2L03,hwMT2L03,mt2
+
+# Bootloader
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
+TARGET_BOARD_PLATFORM := msm8226
+
+# Architecture
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_CPU_ABI := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := krait
+TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
 
-# Krait optimizations
-TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
-TARGET_USE_KRAIT_PLD_SET := true
-TARGET_KRAIT_BIONIC_PLDOFFS := 10
-TARGET_KRAIT_BIONIC_PLDTHRESH := 10
-TARGET_KRAIT_BIONIC_BBTHRESH := 64
-TARGET_KRAIT_BIONIC_PLDSIZE := 64
-
-TARGET_NO_BOOTLOADER := true
-
-BOARD_KERNEL_BASE := 0x0
+# Kernel
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
 BOARD_CUSTOM_BOOTIMG_MK := device/huawei/mt2/mkbootimg.mk
-
-# Try to build the kernel
+TARGET_KERNEL_CONFIG := cyanogenmod_mt2_defconfig
 TARGET_KERNEL_SOURCE := kernel/huawei/msm8928
 
+# QCOM Hardware
+BOARD_USES_QCOM_HARDWARE := true
+
+# Audio
+BOARD_USES_ALSA_AUDIO := true
+TARGET_QCOM_AUDIO_VARIANT := caf
+
+# Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
 
-TARGET_NO_RADIOIMAGE := true
-TARGET_BOARD_PLATFORM := msm8226
+# Camera
+USE_DEVICE_SPECIFIC_CAMERA := true
+# TARGET_GLOBAL_CPPFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
-WPA_SUPPLICANT_VERSION := VER_0_8_X
-BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-BOARD_HOSTAPD_DRIVER := NL80211
-
-BOARD_EGL_CFG := device/huawei/mt2/egl.cfg
-
-USE_OPENGL_RENDERER := true
+# Graphics
 TARGET_USES_ION := true
 TARGET_USES_OVERLAY := true
-TARGET_USES_SF_BYPASS := true
-TARGET_USES_C2D_COMPOSITION := true
-
+USE_OPENGL_RENDERER := true
+#BOARD_EGL_CFG := device/huawei/mt2/egl.cfg
+#TARGET_USES_SF_BYPASS := true
+#TARGET_USES_C2D_COMPOSITION := true
 TARGET_CONTINUOUS_SPLASH_ENABLED := true
+
+# Includes
+TARGET_SPECIFIC_HEADER_PATH := device/huawei/mt2/include
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
 
-# Wifi
-BOARD_HAS_QCOM_WLAN              := true
-BOARD_HAS_QCOM_WLAN_SDK          := true
-BOARD_WLAN_DEVICE                := qcwcn
-WPA_SUPPLICANT_VERSION           := VER_0_8_X
-BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_qcwcn
-BOARD_HOSTAPD_DRIVER             := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_qcwcn
-WIFI_DRIVER_FW_PATH_STA          := "sta"
-WIFI_DRIVER_FW_PATH_AP           := "ap"
-TARGET_USES_WCNSS_CTRL           := true
-TARGET_USES_QCOM_WCNSS_QMI       := true
-TARGET_USES_WCNSS_MAC_ADDR_REV   := true
+# Power
+TARGET_POWERHAL_VARIANT := qcom
 
+# RIL
+
+
+# Wifi
+BOARD_HAS_QCOM_WLAN := true
+BOARD_WLAN_DEVICE := qcwcn
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
+BOARD_HOSTAPD_DRIVER := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
+TARGET_USES_WCNSS_CTRL := true
+WIFI_DRIVER_FW_PATH_STA := "sta"
+WIFI_DRIVER_FW_PATH_AP := "ap"
+
+# Webkit
+ENABLE_WEBGL := true
+TARGET_FORCE_CPU_UPLOAD := true
+
+# Partitions
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 12582912
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216
@@ -88,35 +107,9 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 6442450944
 BOARD_PERSISTIMAGE_PARTITION_SIZE := 8388608
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 
+# Recovery
 BOARD_HAS_NO_SELECT_BUTTON := true
-
-BOARD_USES_QCOM_HARDWARE := true
-#TARGET_USES_QCOM_BSP := true
-COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
-USE_DEVICE_SPECIFIC_CAMERA := true
-TARGET_GLOBAL_CPPFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
-TARGET_QCOM_DISPLAY_VARIANT := caf-new
-TARGET_QCOM_MEDIA_VARIANT := caf-new
-
-BOARD_USES_ALSA_AUDIO := true
-TARGET_QCOM_AUDIO_VARIANT := caf
-
-TARGET_SPECIFIC_HEADER_PATH := device/huawei/mt2/include
-
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-
-TARGET_KERNEL_CONFIG := cyanogenmod_mt2_defconfig
-
 TARGET_RECOVERY_FSTAB = device/huawei/mt2/rootdir/fstab.qcom
-
-# Assert
-# Stock values:
-#   ro.product.device=hwMT2L03
-#   ro.build.product=MT2L03
-# Also:
-#   ro.build.id=HuaweiMT2L03
-TARGET_OTA_ASSERT_DEVICE := MT2L03,hwMT2L03,mt2
 
 # inherit from the proprietary version
 -include vendor/huawei/mt2/BoardConfigVendor.mk
