@@ -34,10 +34,10 @@ vendor/lib/libdrmfs.so
 vendor/lib/libdrmtime.so
 vendor/lib/librpmb.so
 vendor/lib/libssd.so
-vendor/lib/libStDrvInt.so
+# vendor/lib/libStDrvInt.so
 
 # GPS
-app/com.qualcomm.location.apk
+# app/com.qualcomm.location.apk
 bin/gsiff_daemon
 etc/permissions/com.qualcomm.location.xml
 lib/libloc_api_v02.so
@@ -62,8 +62,9 @@ vendor/lib/libCB.so
 vendor/lib/libc2d30.so
 vendor/lib/libc2d30-a3xx.so
 vendor/lib/libgsl.so
-vendor/lib/libllvm-a3xx.so
-vendor/lib/libllvm-arm.so
+vendor/lib/libllvm-qcom.so
+# vendor/lib/libllvm-a3xx.so
+# vendor/lib/libllvm-arm.so
 vendor/lib/libOpenCL.so
 vendor/lib/libOpenVG.so
 vendor/lib/libsc-a3xx.so
@@ -116,7 +117,7 @@ vendor/lib/libqmi_encdec.so
 vendor/lib/libqmiservices.so
 
 # Radio
-app/qcrilmsgtunnel.apk
+app/qcrilmsgtunnel/qcrilmsgtunnel.apk
 bin/netmgrd
 bin/qmuxd
 bin/radish
