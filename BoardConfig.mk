@@ -33,6 +33,8 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := krait
+TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
 
 # Kernel
@@ -44,7 +46,7 @@ BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
 BOARD_CUSTOM_BOOTIMG_MK := device/huawei/mt2/mkbootimg.mk
 TARGET_KERNEL_CONFIG := cyanogenmod_mt2_defconfig
-TARGET_KERNEL_SOURCE := kernel/huawei/msm8928
+TARGET_KERNEL_SOURCE := kernel/huawei/msm8226
 
 # QCOM Hardware
 BOARD_USES_QCOM_HARDWARE := true
@@ -65,9 +67,11 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 TARGET_USES_ION := true
 TARGET_USES_OVERLAY := true
 USE_OPENGL_RENDERER := true
-#BOARD_EGL_CFG := device/huawei/mt2/egl.cfg
-#TARGET_USES_SF_BYPASS := true
-#TARGET_USES_C2D_COMPOSITION := true
+BOARD_EGL_CFG := device/huawei/mt2/egl.cfg
+MAX_EGL_CACHE_KEY_SIZE := 12*1024
+MAX_EGL_CACHE_SIZE := 2048*1024
+OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
+TARGET_USES_C2D_COMPOSITION := true
 TARGET_CONTINUOUS_SPLASH_ENABLED := true
 
 # Includes
