@@ -14,18 +14,15 @@
 # limitations under the License.
 #
 
-# Assert
-# Stock values:
-#   ro.product.device=hwMT2L03
-#   ro.build.product=MT2L03
-# Also:
-#   ro.build.id=HuaweiMT2L03
-TARGET_OTA_ASSERT_DEVICE := MT2L03,hwMT2L03,mt2
+LOCAL_PATH := device/huawei/mt2
 
-# Bootloader
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_RADIOIMAGE := true
+TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
+
+# inherit from the proprietary version
+include vendor/huawei/mt2/BoardConfigVendor.mk
+
 TARGET_BOARD_PLATFORM := msm8226
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno305
 
 # Architecture
 TARGET_ARCH := arm
@@ -33,9 +30,41 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := krait
-TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
-TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
-TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
+TARGET_CPU_SMP := true
+ARCH_ARM_HAVE_TLS_REGISTER := true
+
+# Audio
+BOARD_USES_ALSA_AUDIO := true
+BOARD_USES_EXTN_AUDIO_POLICY_MANAGER := true
+AUDIO_FEATURE_ENABLED_INCALL_MUSIC := true
+AUDIO_FEATURE_ENABLED_ANC_HEADSET := true
+AUDIO_FEATURE_ENABLED_FM := true
+AUDIO_FEATURE_ENABLED_USBAUDIO := true
+AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
+AUDIO_FEATURE_ENABLED_LOW_LATENCY_PRIMARY := true
+# BOARD_USES_ES705 := true
+
+# Bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
+BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_QCOM := true
+BLUETOOTH_HCI_USE_MCT := true
+
+# Bootloader
+TARGET_BOOTLOADER_BOARD_NAME := MT2
+TARGET_NO_BOOTLOADER := true
+
+# Display
+USE_OPENGL_RENDERER := true
+BOARD_EGL_CFG := $(LOCAL_PATH)/configs/egl.cfg
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
+TARGET_USES_C2D_COMPOSITION := true
+TARGET_USES_ION := true
+TARGET_CONTINUOUS_SPLASH_ENABLED := true
+
+# GPS
+#TARGET_GPS_HAL_PATH := $(LOCAL_PATH)/gps
+#BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := msm8226
 
 # Kernel
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37
@@ -43,39 +72,17 @@ BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
-BOARD_CUSTOM_BOOTIMG_MK := device/huawei/mt2/mkbootimg.mk
+BOARD_RAMDISK_OFFSET := 0x02000000
+#BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
+BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
 TARGET_KERNEL_CONFIG := cyanogenmod_mt2_defconfig
 TARGET_KERNEL_SOURCE := kernel/huawei/msm8226
 
-# QCOM Hardware
-BOARD_USES_QCOM_HARDWARE := true
+# Media
+COMMON_GLOBAL_CFLAGS += -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
 
-# Audio
-BOARD_USES_ALSA_AUDIO := true
-TARGET_QCOM_AUDIO_VARIANT := caf
-
-# Bluetooth
-BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_QCOM := true
-
-# Camera
-USE_DEVICE_SPECIFIC_CAMERA := true
-# TARGET_GLOBAL_CPPFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
-
-# Graphics
-TARGET_USES_ION := true
-TARGET_USES_OVERLAY := true
-USE_OPENGL_RENDERER := true
-BOARD_EGL_CFG := device/huawei/mt2/egl.cfg
-MAX_EGL_CACHE_KEY_SIZE := 12*1024
-MAX_EGL_CACHE_SIZE := 2048*1024
-OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
-TARGET_USES_C2D_COMPOSITION := true
-TARGET_CONTINUOUS_SPLASH_ENABLED := true
-
-# Includes
-TARGET_SPECIFIC_HEADER_PATH := device/huawei/mt2/include
+# Memory
+MALLOC_IMPL := dlmalloc
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
@@ -84,7 +91,7 @@ TARGET_PROVIDES_LIBLIGHT := true
 TARGET_POWERHAL_VARIANT := qcom
 
 # RIL
-
+BOARD_PROVIDES_LIBRIL := false
 
 # Wifi
 BOARD_HAS_QCOM_WLAN := true
@@ -97,10 +104,6 @@ BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 TARGET_USES_WCNSS_CTRL := true
 WIFI_DRIVER_FW_PATH_STA := "sta"
 WIFI_DRIVER_FW_PATH_AP := "ap"
-
-# Webkit
-ENABLE_WEBGL := true
-TARGET_FORCE_CPU_UPLOAD := true
 
 # Partitions
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -115,5 +118,3 @@ BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_RECOVERY_FSTAB = device/huawei/mt2/rootdir/fstab.qcom
 
-# inherit from the proprietary version
--include vendor/huawei/mt2/BoardConfigVendor.mk

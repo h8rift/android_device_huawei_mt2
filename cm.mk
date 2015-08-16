@@ -12,10 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Boot animation
-TARGET_SCREEN_HEIGHT := 1280
-TARGET_SCREEN_WIDTH := 720
-
 $(call inherit-product, device/huawei/mt2/full_mt2.mk)
 
 # Inherit some common CM stuff.
